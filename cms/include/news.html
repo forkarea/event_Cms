@@ -1,0 +1,38 @@
+<div title-toolbar="Aktualności" menu-func="toggleLeft()" user-info="userInfo" logout="logout()" event-edition="event_edition" editions="editions"></div>
+
+<div class="news-container" ng-controller="newsCtrl">
+	<md-card class="news" ng-repeat="news in newsList">
+		<md-card-title>
+			<md-card-title-text>
+				<span class="md-headline">{{news.title}}</span>
+				<span layout-wrap wrap layout="row" class="md-subhead">
+					<label flex="100"><span>Data dodania</span>
+						<div>{{news.date}}</div>
+					</label>
+					<label flex="100"><span>Opis</span>
+						<div>{{news.content}}</div>
+					</label>
+				</span>
+			</md-card-title-text>
+			<md-card-title-media>
+				<div class="md-media-lg card-media">
+					<img ngf-thumbnail="news.photo"/>
+				</div>
+			</md-card-title-media>
+		</md-card-title>
+		<md-card-actions layout="row" layout-align="end center">
+			<md-button ng-click="editNews(news)">Edytuj</md-button>
+			<md-button ng-click="removeNews(news)">Usuń</md-button>
+		</md-card-actions>
+	</md-card>
+	<div ng-show="showInfo" class="no-content">Lista aktualności w tej edycji wydarzenia jest pusta</div>
+	<div class="lock-size" layout="row" layout-align="center center">
+    	<md-fab-speed-dial ng-click="clearForm(); toggleRight()" ng-hide="isOpenRight()" class="md-fab-bottom-right">
+    		<md-fab-trigger>
+        		<md-button aria-label="menu" class="md-fab">
+            		<md-icon md-font-set="material-icons">add</md-icon>
+        		</md-button>
+    		</md-fab-trigger>
+		</md-fab-speed-dial>
+	</div>
+</div>

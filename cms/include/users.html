@@ -1,0 +1,42 @@
+<div title-toolbar="Użytkownicy" menu-func="toggleLeft()" user-info="userInfo" logout="logout()" event-edition="event_edition" editions="editions"></div>
+
+<div class="users-container" ng-controller="usersCtrl">
+	<md-card class="user" ng-repeat="user in users">
+		<md-card-title>
+			<md-card-title-text>
+				<span class="md-headline">{{user.username}}</span>
+				<span layout-wrap wrap layout="row" class="md-subhead">
+					<label flex="25"><span>Imię i nazwisko</span>
+						<div>{{user.first_name}} {{user.last_name}}</div>
+					</label> 
+					<label flex="25"><span>E-mail</span>
+						<br />
+						<div>{{user.email}}</div>
+					</label> 
+					<label flex="25"><span>Ostatnie logowanie</span>
+						<div>{{user.last_login}}</div>
+					</label> 
+					<label flex="25"><span>Rola</span>
+						<div ng-show="user.role === 'a'">Administrator</div>
+						<div ng-show="user.role === 'r'">Redaktor</div>
+					</label> 
+				</span>
+			</md-card-title-text>
+		</md-card-title>
+		<md-card-actions layout="row" layout-align="end center">
+			<md-button ng-show="isAdmin" ng-disabled="(user.username === userLogged)" ng-click="editUser(user)">Edytuj</md-button>
+			<md-button ng-show="isAdmin" ng-disabled="(user.username === userLogged)" ng-click="removeUser(user.id, user.username)">Usuń</md-button>
+		</md-card-actions>
+	</md-card>
+	<div ng-show="showInfo" class="no-content">Lista użytkowników jest pusta</div>
+
+	<div class="lock-size" ng-show="isAdmin" layout="row" layout-align="center center">
+    	<md-fab-speed-dial ng-click="clearForm(); toggleRight()" ng-hide="isOpenRight()" class="md-fab-bottom-right">
+    		<md-fab-trigger>
+        		<md-button aria-label="menu" class="md-fab">
+            		<md-icon md-font-set="material-icons">add</md-icon>
+        		</md-button>
+    		</md-fab-trigger>
+		</md-fab-speed-dial>
+	</div>
+</div>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html ng-app="configPage">
+<head>
+	<meta charset="UTF-8">
+	<script src="js/libs/angular.min.js"></script>
+	<script src="js/libs/angular-animate.min.js"></script>
+	<script src="js/libs/angular-ui-router.min.js"></script>
+	<script src="js/libs/angular-aria.min.js"></script>
+	<script src="js/libs/angular-messages.min.js"></script>
+	<script src="js/libs/angular-material.min.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/services/config-services.js"></script>
+	<script src="js/services/inform-services.js"></script>
+	<title>Konfiguracja strony</title>
+	<link href='https://fonts.googleapis.com/css?family=Lato:400,400italic,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+	<link rel="stylesheet" href="css/config.css">
+</head>
+<body class="configPage">
+	<md-toolbar class="md-theme-light">
+		<h1 class="md-toolbar-tools">Konfiguracja strony</h1>
+	</md-toolbar>
+	<md-content layout-padding class="agenda-new-container" ng-controller="configPageCtrl">
+		<form name="configuration" layout-wrap flex layout="row">
+			<md-input-container flex="100">
+				<label>Adres serwera bazy danych</label>
+				<input name="name" ng-model="db.db_server" md-maxlength="150" minlength="2" required>
+			</md-input-container>
+
+			<md-input-container flex="100">
+				<label>Nazwa użytkownika bazy danych</label>
+				<input name="name" ng-model="db.db_user" md-maxlength="150" minlength="2" required>
+			</md-input-container>
+
+			<md-input-container flex="100">
+				<label>Hasło użytkownika bazy danych</label>
+				<input name="name" ng-model="db.db_password" md-maxlength="150" minlength="2" required>
+			</md-input-container>
+
+			<md-input-container flex="100">
+				<label>Nazwa bazy danych</label>
+				<input name="name" ng-model="db.db_name" md-maxlength="150" minlength="2" required>
+			</md-input-container>
+
+			<h4>Utworzenie pierwszego użytkownika z uprawnieniami administracyjnymi</h4>
+
+			<md-input-container flex="100">
+				<label>Nazwa użytkownika</label>
+				<input ng-model="user.username" md-maxlength="32" required>
+			</md-input-container>
+
+			<md-input-container flex="100">
+				<label>Imię</label>
+				<input ng-model="user.first_name" md-maxlength="50" minlength="2" required>
+			</md-input-container>
+
+			<md-input-container flex="100">
+				<label>Nazwisko</label>
+				<input ng-model="user.last_name" md-maxlength="60" minlength="2" required>
+			</md-input-container>
+
+			<md-input-container flex="100">
+				<label>E-mail</label>
+				<input ng-model="user.email" type="email" md-maxlength="80" minlength="2" required>
+			</md-input-container>
+
+			<md-input-container flex="100">
+				<label>Hasło</label>
+				<input name="password" ng-model="user.password" type="password" md-maxlength="32" minlength="5" required>
+			</md-input-container>
+
+			<md-input-container flex="100">
+				<label>Potwierdź nowe hasło</label>
+				<input name="confirmPassword" ng-model="user.confirmPassword" type="password" md-maxlength="32" minlength="5" required>
+			</md-input-container>
+
+			<div class="actions-row" layout="row" layout-align="end center">
+				<md-button id="save" ng-click="save(configuration)">Zapisz</md-button>
+			</div>	
+		</form>
+	</md-content>
+</body>
+</html>

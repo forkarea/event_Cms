@@ -1,0 +1,54 @@
+<md-toolbar class="md-theme-light">
+	<h1 class="md-toolbar-tools">Nowy partner</h1>
+</md-toolbar>
+
+<md-content layout-padding class="partner-container" ng-controller="partnerNewCtrl" novalidate>
+	<form name="newPartner" layout-wrap flex layout="row">
+		<md-input-container flex="100">
+			<label>Nazwa</label>
+			<input name="name" ng-model="partner.name" md-maxlength="200" minlength="2" required>
+		</md-input-container>
+
+		<md-input-container flex="100">
+			<label>Strona WWW</label>
+			<input type="url" name="www" ng-model="partner.www" md-maxlength="150" minlength="2">
+		</md-input-container>
+
+		<md-input-container flex="100">
+			<label>Fanpage FB</label>
+			<input type="url" name="fb" ng-model="partner.fb" md-maxlength="100" minlength="2">
+		</md-input-container>
+
+		<md-input-container flex="100">
+			<label>O partnerze</label>
+			<textarea name="description" ng-model="partner.description" md-maxlength="2000" required></textarea>
+		</md-input-container>
+
+		<div flex="75">
+			<md-input-container class="img-upload">
+				<label>Logo</label>
+				<input type="file" name="logo" ng-model="partner.logo" ngf-select ngf-max-size="1MB" ngf-model-invalid="errorFiles" class="file-input" ngf-pattern="'image/*'" ngf-accept="'image/*'">
+			</md-input-container>
+			<i ng-show="newPartner.logo.$error.maxSize">Rozmiar pliku: {{errorFiles[0].size / 1000000|number:1}}MB. Maksymalny rozmiar pliku: 1MB</i>
+			<md-progress-linear ng-show="progress > 0" class="md-warn" md-mode="determinate" ng-value="progress"></md-progress-linear>
+		</div>
+		<div flex="25" class="add-img-container">
+			<img ng-show="newPartner.logo.$valid" ngf-thumbnail="partner.logo" class="add-img-view"> 
+			<md-button ng-click="partner.logo = null" ng-show="partner.logo">Usuń</md-button>
+		</div>		
+		
+		<md-input-container flex="100">
+			<label>Typ partnera</label>
+			<md-select name="type" ng-model="partner.type" required>
+				<md-option ng-value="p.id" ng-repeat="p in partnerDictionary">{{p.name}}</md-option>
+			</md-select>
+		</md-input-container>
+
+
+		<div class="actions-row" layout="row" layout-align="end center">
+			<md-button id="cancel" ng-click="close(newPartner)">Anuluj</md-button>
+			<md-button id="save" ng-hide="isEdit()" ng-click="save(newPartner)">Dodaj</md-button>
+			<md-button id="save" ng-show="isEdit()"ng-click="saveChanges(newPartner)">Zapisz zmiany</md-button>
+		</div>	
+	</form>
+</md-content>

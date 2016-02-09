@@ -1,0 +1,35 @@
+<md-toolbar class="md-theme-light">
+	<h1 class="md-toolbar-tools">Nowa edycja</h1>
+</md-toolbar>
+
+<md-content layout-padding class="edition-container" ng-controller="newEditionCtrl">
+	<form name="newEdition" layout-wrap flex layout="row">
+		<md-input-container flex="100">
+			<label>Numer edycji</label>
+			<input name="name" ng-model="edition.number" md-maxlength="11" minlength="1" required>
+		</md-input-container>
+
+		<md-input-container flex="100">
+			<label>Nazwa</label>
+			<input name="name" ng-model="edition.name" md-maxlength="150" minlength="2" required>
+		</md-input-container>
+
+		<h4 ng-class="{filled: edition.start_date != null}">Data rozpoczęcia</h4>
+		<md-datepicker flex="100" name="start_date" ng-model="edition.start_date" md-placeholder="Wybierz" md-min-date="minDate" md-max-date="maxDate" ng-required></md-datepicker>
+
+		<h4 ng-class="{filled: edition.stop_date != null}">Data zakończenia</h4>
+		<md-datepicker flex="100" name="stop_date" ng-model="edition.stop_date" md-placeholder="Wybierz" md-min-date="minDateTo" md-max-date="maxDate" ng-required></md-datepicker>    
+
+		<h4>Widoczność edycji na stronie</h4>
+		<md-checkbox flex="100" ng-model="edition.visibility" aria-label="Widoczność" ng-true-value="'1'" ng-false-value="'0'">
+			Tak
+		</md-checkbox> 
+		<br />
+		
+		<div class="actions-row" layout="row" layout-align="end center">
+			<md-button id="cancel" ng-click="close(newEdition)">Anuluj</md-button>
+			<md-button id="save" ng-hide="isEdit" ng-click="save(newEdition)">Dodaj</md-button>
+			<md-button id="save-changes" ng-show="isEdit" ng-click="saveChanges(newEdition)">Zapisz zmiany</md-button>
+		</div>
+	</form>
+</md-content>

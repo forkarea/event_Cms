@@ -1,0 +1,23 @@
+<div ng-init="getTrainersList()" class="trainers-container">
+	<md-card class="trainer" ng-repeat="trainer in trainers">
+		<md-card-title>
+			<md-card-title-text>
+				<span class="md-headline">{{trainer.first_name}} {{trainer.last_name}}</span>
+				<span layout-wrap wrap layout="row" class="md-subhead">
+					<label flex="100" ng-if="trainer.description != ''"><span>O trenerze</span>
+						<div class="trainer-description">{{trainer.description}}</div>
+					</label> 
+					<label flex="100" ng-if="trainer.experience != ''"><span>Doświadczenie</span>
+						<div class="trainer-experience">{{trainer.experience}}</div>
+					</label> 
+				</span>
+			</md-card-title-text>
+			<md-card-title-media ng-if="trainer.photo != ''">
+				<div class="md-media-lg card-media">
+					<img ngf-thumbnail="trainer.photo"/>
+				</div>
+			</md-card-title-media>
+		</md-card-title>
+	</md-card>
+	<div ng-show="showTrainersInfo" class="no-content">Lista trenerów w tej edycji wydarzenia jest pusta</div>
+</div>

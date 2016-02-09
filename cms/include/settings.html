@@ -1,0 +1,29 @@
+<div title-toolbar="Ustawienia" menu-func="toggleLeft()" user-info="userInfo" logout="logout()" event-edition="event_edition" editions="editions"></div>
+
+<div class="settings" ng-controller="settingsCtrl" ng-init="getUserDetails()" layout-wrap flex layout="row">
+	<form flex="100" name="menuVisibility" layout-wrap flex layout="row">
+		<h1 flex="100" class="md-headline">Opcje dostępne w menu</h1>
+		<div layout-wrap flex="100" layout="row" ng-repeat="menu in listMenu" ng-class="{'disabled': menu.visibility == '0'}">
+			<md-checkbox flex="15" class="md-primary" ng-model="menu.visibility" layout="row" layout-align="start center" ng-true-value="'1'" ng-false-value="'0'">
+				{{menu.name}}
+			</md-checkbox>
+			<md-input-container flex="30">
+				<label>Nazwa opcji menu</label>
+				<input ng-model="menu.public_name" md-maxlength="50" minlength="2" required ng-disabled="menu.visibility == '0'">
+			</md-input-container>
+			<md-input-container flex="20">
+			<label>Pozycja w menu</label>
+				<md-select name="type" ng-model="menu.position" ng-disabled="menu.visibility == '0'">
+					<md-option ng-repeat="pos in menuPositions" ng-value="pos">{{pos}}</md-option>
+				</md-select>
+			</md-input-container>
+			<md-input-container flex="30">
+				<label>Tytuł podstrony</label>
+				<input ng-model="menu.title" md-maxlength="150" minlength="2" required ng-disabled="menu.visibility == '0'">
+			</md-input-container>
+		</div>
+		<div class="actions-row" layout="row" layout-align="end center">
+			<md-button id="save" ng-click="saveChenges()">Zapisz</md-button>
+		</div>
+	</form>
+</div>

@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html ng-app="main">
+<head>
+	<meta charset="UTF-8">
+	<script src="js/libs/angular.min.js"></script>
+	<script src="js/libs/angular-animate.min.js"></script>
+	<script src="js/libs/angular-ui-router.min.js"></script>
+	<script src="js/libs/angular-aria.min.js"></script>
+	<script src="js/libs/angular-messages.min.js"></script>
+	<script src="js/libs/angular-material.min.js"></script>
+	<script src="js/libs/angular-locale_pl.js"></script>
+	<script src="js/libs/daypilot-all.min.js"></script>
+	<script src="js/upload/ng-file-upload.js"></script>
+	<script src="js/inform-services.js"></script>
+	<script src="js/services.js"></script>
+	<script src="js/main.js"></script>
+
+	<title>Strona główna</title>
+	<link href='https://fonts.googleapis.com/css?family=Lato:400,400italic,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,300">
+
+</head>
+<body class="body" ng-controller="mainCtrl">
+	<md-toolbar class="md-theme-light">
+		<h1 class="md-toolbar-tools">{{edition.name}}</h1>
+		<h4 ng-show="edition.difDate">{{edition.start_date | date: 'dd MMMM yyyy'}} - {{edition.stop_date | date: 'dd MMMM yyyy'}}</h4>
+		<h4 ng-hide="edition.difDate">{{edition.start_date | date: 'dd MMMM yyyy'}}</h4>
+	</md-toolbar>
+	<md-content>
+		<md-tabs md-dynamic-height md-border-bottom>
+			<md-tab ng-repeat="m in menu" label="{{m.public_name}}">
+				<md-content class="md-padding">
+					<h1 class="md-display-1">{{m.title}}</h1>
+					<ng-include src="m.url"></ng-include>
+				</md-content>
+			</md-tab>
+		</md-tabs>
+	</md-content>
+</body>
+</html>

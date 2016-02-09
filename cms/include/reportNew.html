@@ -1,0 +1,25 @@
+<md-toolbar class="md-theme-light">
+	<h1 class="md-toolbar-tools">Nowe zdjęcie</h1>
+</md-toolbar>
+
+<md-content layout-padding class="photo-container" ng-controller="reportNewCtrl" novalidate>
+	<form name="newPhoto" layout-wrap flex layout="row">
+		<div flex="75">
+			<md-input-container class="img-upload">
+				<label>Zdjęcie</label>
+				<input type="file" name="photo" ng-model="photo" ngf-select ngf-max-size="1MB" ngf-model-invalid="errorFiles" class="file-input" ngf-pattern="'image/*'" ngf-accept="'image/*'" required>
+			</md-input-container>
+			<i ng-show="newPhoto.photo.$error.maxSize">Rozmiar pliku: {{errorFiles[0].size / 1000000|number:1}}MB. Maksymalny rozmiar pliku: 1MB</i>
+			<md-progress-linear ng-show="progress > 0" class="md-warn" md-mode="determinate" ng-value="progress"></md-progress-linear>
+		</div>
+		<div flex="25" class="add-img-container">
+			<img ng-show="photo.$valid" ngf-thumbnail="photo" class="add-img-view"> 
+			<md-button ng-click="photo = null" ng-show="photo">Usuń</md-button>
+		</div>	
+
+		<div class="actions-row" layout="row" layout-align="end center">
+			<md-button id="cancel" ng-click="close(newPhoto)">Anuluj</md-button>
+			<md-button ng-hide="isEdit" id="save" ng-click="save(newPhoto)">Dodaj</md-button>
+		</div>
+	</form>
+</md-content>

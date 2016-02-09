@@ -1,0 +1,21 @@
+<div ng-init="getNewsList()" class="news-container">
+	<md-card class="trainer" ng-repeat="n in news" ng-class="{'important': n.priority == 2}">
+		<md-card-title>
+			<md-card-title-text>
+				<span class="md-headline">{{n.title}}</span>
+				<span layout-wrap wrap layout="row" class="md-subhead">
+					<div flex="100">{{n.date | date: 'dd MMMM yyyy'}}</div>
+					<label>
+						<div flex="100">{{n.content}}</div>
+					</label>
+				</span>
+			</md-card-title-text>
+			<md-card-title-media>
+				<div class="md-media-lg card-media">
+					<img ngf-thumbnail="n.photo"/>
+				</div>
+			</md-card-title-media>
+		</md-card-title>
+	</md-card>
+	<div ng-show="showNewsInfo" class="no-content">Lista wiadomości w tej edycji wydarzenia jest pusta</div>
+</div>

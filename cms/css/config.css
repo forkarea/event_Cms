@@ -1,0 +1,19 @@
+md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar), 
+md-fab-speed-dial.md-fab-bottom-right button,  md-fab-speed-dial.md-fab-bottom-center md-fab-trigger button {
+	background-color: #1468b3!important;
+	color: #fff;
+}
+
+form md-input-container {
+	margin: 15px 25px;
+}
+
+md-content form {
+	margin: 50px 25px;
+	max-width: 650px;
+	width: auto;
+}
+
+form div.actions-row {
+	width: 100%;
+}

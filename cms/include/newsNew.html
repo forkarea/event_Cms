@@ -1,0 +1,47 @@
+<md-toolbar class="md-theme-light">
+	<h1 class="md-toolbar-tools">Nowa wiadomość</h1>
+</md-toolbar>
+
+<md-content layout-padding class="news-container" ng-controller="newsNewCtrl" novalidate>
+	<form name="newNews" layout-wrap flex layout="row">
+		<md-input-container flex="100">
+			<label>Tytuł</label>
+			<input name="name" ng-model="news.title" md-maxlength="200" minlength="2" required>
+		</md-input-container>
+
+		<h4 ng-class="{filled: news.date != null}">Data dodania</h4>
+		<md-datepicker flex="100" name="start_date" ng-model="news.date" md-placeholder="Wybierz" md-min-date="minDate" md-max-date="maxDate" required></md-datepicker>
+
+		<md-input-container flex="100">
+			<label>Treść</label>
+			<textarea name="content" ng-model="news.content" md-maxlength="5000" required></textarea>
+		</md-input-container>
+
+		<md-input-container flex="100">
+			<label>Piorytet wiadomości</label>
+			<md-select name="type" ng-model="news.priority" required>
+				<md-option ng-value="1">Zwykła</md-option>
+				<md-option ng-value="2">Ważna</md-option>
+			</md-select>
+		</md-input-container>
+
+		<div flex="75">
+			<md-input-container class="img-upload">
+				<label>Zdjęcie</label>
+				<input type="file" name="photo" ng-model="news.photo" ngf-select ngf-max-size="1MB" ngf-model-invalid="errorFiles" class="file-input" ngf-pattern="'image/*'" ngf-accept="'image/*'">
+			</md-input-container>
+			<i ng-show="newNews.photo.$error.maxSize">Rozmiar pliku: {{errorFiles[0].size / 1000000|number:1}}MB. Maksymalny rozmiar pliku: 1MB</i>
+			<md-progress-linear ng-show="progress > 0" class="md-warn" md-mode="determinate" ng-value="progress"></md-progress-linear>
+		</div>
+		<div flex="25" class="add-img-container">
+			<img ng-show="news.photo.$valid" ngf-thumbnail="news.photo" class="add-img-view"> 
+			<md-button ng-click="news.photo = null" ng-show="news.photo">Usuń</md-button>
+		</div>	
+
+		<div class="actions-row" layout="row" layout-align="end center">
+			<md-button id="cancel" ng-click="close(newNews)">Anuluj</md-button>
+			<md-button ng-hide="isEdit" id="save" ng-click="save(newNews)">Dodaj</md-button>
+			<md-button ng-show="isEdit" id="save" ng-click="saveChanges(newNews)">Zapisz zmiany</md-button>
+		</div>
+	</form>
+</md-content>

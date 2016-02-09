@@ -1,0 +1,46 @@
+<md-toolbar class="md-theme-light">
+	<h1 class="md-toolbar-tools">Nowy element</h1>
+</md-toolbar>
+
+<md-content layout-padding class="agenda-new-container" ng-controller="agendaNewCtrl">
+	<form name="newAgendaElem" layout-wrap flex layout="row">
+		<md-input-container flex="100">
+			<label>Nazwa</label>
+			<input name="name" ng-model="element.name" md-maxlength="150" minlength="2" required>
+		</md-input-container>
+
+		<h4 ng-class="{filled: element.start_date != null}">Data rozpoczęcia</h4>
+		<md-datepicker flex="100" name="start_date" ng-model="element.start_date" md-placeholder="Wybierz" md-min-date="minDate" md-max-date="maxDate" ng-required></md-datepicker>
+
+		<md-input-container flex="100">
+			<label>Godzina rozpoczęcia</label>
+			<input type="time" name="start_time" ng-model="element.start_time" required>
+		</md-input-container>  
+
+		<h4 ng-class="{filled: element.stop_date != null}">Data zakończenia</h4>
+		<md-datepicker flex="100" name="stop_date" ng-model="element.stop_date" md-placeholder="Wybierz" md-min-date="minDateTo" md-max-date="maxDate" ng-required></md-datepicker>    
+
+		<md-input-container flex="100">
+			<label>Godzina zakończenia</label>
+			<input type="time" name="stop_time" ng-model="element.stop_time" required>
+		</md-input-container>  
+
+		<md-input-container flex="100">
+			<label>Trener</label>
+			<md-select name="trainer" ng-model="element.trainer_id">
+				<md-option ng-value="trainer.id" ng-repeat="trainer in trainers">{{trainer.first_name + ' ' + trainer.last_name}}</md-option>
+			</md-select>
+		</md-input-container>
+
+		<md-input-container flex="100">
+			<label>Opis</label>
+			<textarea name="description" ng-model="element.description" required md-maxlength="3000"></textarea>
+		</md-input-container>
+
+		<div class="actions-row" layout="row" layout-align="end center">
+			<md-button id="cancel" ng-click="close(newAgendaElem)">Anuluj</md-button>
+			<md-button id="save" ng-hide="isEdit" ng-click="save(newAgendaElem)">Dodaj</md-button>
+			<md-button id="save" ng-show="isEdit" ng-click="saveChanges(newAgendaElem)">Zapisz zmiany</md-button>
+		</div>	
+	</form>
+</md-content>

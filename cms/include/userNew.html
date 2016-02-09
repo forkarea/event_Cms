@@ -1,0 +1,53 @@
+<md-toolbar class="md-theme-light">
+	<h1 class="md-toolbar-tools">Nowy użytkownik</h1>
+</md-toolbar>
+
+<md-content layout-padding class="new-user-container" ng-controller="userNewCtrl">
+	<form name="newUser" layout-wrap flex layout="row">
+		<md-input-container flex="100">
+			<label>Nazwa użytkownika</label>
+			<input ng-model="user.username" md-maxlength="32" required ng-disabled="isEdit">
+		</md-input-container>
+
+		<md-input-container flex="100">
+			<label>Imię</label>
+			<input ng-model="user.first_name" md-maxlength="50" minlength="2" required>
+		</md-input-container>
+
+		<md-input-container flex="100">
+			<label>Nazwisko</label>
+			<input ng-model="user.last_name" md-maxlength="60" minlength="2" required>
+		</md-input-container>
+
+		<md-input-container flex="100">
+			<label>E-mail</label>
+			<input ng-model="user.email" type="email" md-maxlength="80" minlength="2" required>
+		</md-input-container>
+
+		<h4 ng-class="{filled: user.role != null}">Rola</h4>
+		<md-radio-group ng-model="user.role" class="md-primary" flex="100">
+			<md-radio-button value="r">Redaktor</md-radio-button>
+			<md-radio-button value="a">Administrator</md-radio-button>
+		</md-radio-group>
+
+		<md-checkbox ng-show="isEdit" ng-model="changePassword" aria-label="Zmiana hasła">
+			Zmiana hasła
+		</md-checkbox> 
+
+		<md-input-container flex="100">
+			<label>Hasło</label>
+			<input name="password" ng-model="user.password" type="password" md-maxlength="32" minlength="5" ng-required="!isEdit || changePassword" ng-disabled="isEdit && !changePassword">
+		</md-input-container>
+
+		<md-input-container flex="100">
+			<label>Potwierdź nowe hasło</label>
+			<input name="confirmPassword" ng-model="user.confirmPassword" type="password" md-maxlength="32" minlength="5" ng-required="!isEdit || changePassword" ng-disabled="isEdit && !changePassword">
+		</md-input-container>
+
+		<div class="actions-row" layout="row" layout-align="end center">
+			<md-button id="cancel" ng-click="close(newUser)">Anuluj</md-button>
+			<md-button id="save" ng-hide="isEdit" ng-click="save(newUser)">Dodaj</md-button>
+			<md-button id="save" ng-show="isEdit"ng-click="saveChanges(newUser)">Zapisz zmiany</md-button>
+		</div>
+	</form>
+</md-content>

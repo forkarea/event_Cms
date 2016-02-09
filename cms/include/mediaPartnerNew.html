@@ -1,0 +1,52 @@
+<md-toolbar class="md-theme-light">
+	<h1 class="md-toolbar-tools">Nowy patron medialny</h1>
+</md-toolbar>
+
+<md-content layout-padding class="media-partner-container" ng-controller="mediaPartnerNewCtrl" novalidate>
+	<form name="newMediaPartner" layout-wrap flex layout="row">
+		<md-input-container flex="100">
+			<label>Nazwa</label>
+			<input name="name" ng-model="mediaPartner.name" md-maxlength="200" minlength="2" required>
+		</md-input-container>
+
+		<md-input-container flex="100">
+			<label>Strona WWW</label>
+			<input type="url" name="www" ng-model="mediaPartner.www" md-maxlength="150" minlength="2">
+		</md-input-container>
+
+		<md-input-container flex="100">
+			<label>Fanpage FB</label>
+			<input type="url" name="fb" ng-model="mediaPartner.fb" md-maxlength="100" minlength="2">
+		</md-input-container>
+
+		<md-input-container flex="100">
+			<label>O partnerze</label>
+			<textarea name="description" ng-model="mediaPartner.description" md-maxlength="2000"></textarea>
+		</md-input-container>
+
+		<div flex="75">
+			<md-input-container class="img-upload">
+				<label>Logo</label>
+				<input type="file" name="logo" ng-model="mediaPartner.logo" ngf-select ngf-max-size="1MB" ngf-model-invalid="errorFiles" class="file-input" ngf-pattern="'image/*'" ngf-accept="'image/*'">
+			</md-input-container>
+			<i ng-show="newMediaPartner.logo.$error.maxSize">Rozmiar pliku: {{errorFiles[0].size / 1000000|number:1}}MB. Maksymalny rozmiar pliku: 1MB</i>
+			<md-progress-linear ng-show="progress > 0" class="md-warn" md-mode="determinate" ng-value="progress"></md-progress-linear>
+		</div>
+		<div flex="25" class="add-img-container">
+			<img ng-show="newPartner.logo.$valid" ngf-thumbnail="mediaPartner.logo" class="add-img-view"> 
+			<md-button ng-click="mediaPartner.logo = null" ng-show="mediaPartner.logo">Usuń</md-button>
+		</div>
+		
+		<md-input-container flex="100">
+			<label>Typ partnera</label>
+			<md-select name="type" ng-model="mediaPartner.type" required>
+				<md-option ng-value="m.id" ng-repeat="m in mediaPartnerDictionary">{{m.name}}</md-option>
+			</md-select>
+		</md-input-container>
+		<div class="actions-row" layout="row" layout-align="end center">
+			<md-button id="cancel" ng-click="close(newMediaPartner)">Anuluj</md-button>
+			<md-button id="save" ng-hide="isEdit" ng-click="save(newMediaPartner)">Dodaj</md-button>
+			<md-button id="save" ng-show="isEdit"ng-click="saveChanges(newMediaPartner)">Zapisz zmiany</md-button>
+		</div>
+	</form>
+</md-content>

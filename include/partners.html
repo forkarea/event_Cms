@@ -1,0 +1,23 @@
+<div ng-init="getPartners()" class="partners-container">
+	<div layout-wrap flex layout="row" class="partners" ng-repeat="partner in partners">
+		<span flex="100" class="md-headline">{{partner.name}}</span>
+		<md-card flex="30" ng-repeat="item in partner.list">
+			<md-card-header>
+				<md-card-header-text>
+					<span class="md-title">{{item.name}}</span>
+					<span class="md-subhead"><a ng-href="{{item.www}}">{{item.www}}</a></span>
+				</md-card-header-text>
+			</md-card-header>
+			<md-card-title-media ng-if="item.logo != ''">
+				<div class="md-media-lg card-media">
+					<img ngf-thumbnail="item.logo" class="md-card-image"/>
+				</div>
+			</md-card-title-media>
+			<md-card-content>
+				<p>{{item.description}}</p>
+				<span><a ng-href="{{item.fb}}">{{item.fb}}</a></span>
+			</md-card-content>
+		</md-card>
+	</div>
+	<div ng-show="showInfo" class="no-content">Lista partnerów w tej edycji wydarzenia jest pusta</div>
+</div>

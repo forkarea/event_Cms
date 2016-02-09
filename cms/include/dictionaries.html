@@ -1,0 +1,57 @@
+<div title-toolbar="Słowniki" menu-func="toggleLeft()" user-info="userInfo" logout="logout()" event-edition="event_edition" editions="editions"></div>
+
+<div layout-wrap flex layout="row" class="dictionaries-container"ng-controller="dictionariesCtrl"> 
+<div flex="45">
+	<md-list ng-cloak>
+		<md-subheader class="md-no-sticky">Słownik typów partnerów</md-subheader>
+		<md-list-item ng-repeat="p in partnersDict">
+			<p ng-show="p.id > 0 && !isEditPartner(p.id)">{{p.name}}</p>
+			<p ng-show="p.id < 0 || isEditPartner(p.id)">
+				<md-input-container>
+					<label>Nazwa typu</label>
+					<input ng-model="p.name" md-maxlength="100" minlength="2">
+				</md-input-container>
+			</p>
+			<p layout="row" layout-align="end center">
+				<md-button ng-show="p.id > 0 && !isEditPartner(p.id)" ng-click="editPartner(p.id)">Edytuj</md-button>
+				<md-button ng-click="removePartner(p)">Usuń</md-button>
+			</p>
+		</md-list-item>
+		<md-list-item>
+			<p layout="row" layout-align="end center">
+				<md-button ng-click="addToPartner()">Dodaj</md-button>
+			</p>
+		</md-list-item>
+	</md-list>
+	<p layout="row" layout-align="end center">
+		<md-button ng-click="savePartnersDictionary()">Zapisz zmiany w słowniku partnerów</md-button>
+	</p>
+</div>
+<div flex="10"></div>
+<div flex="45">
+	<md-list ng-cloak>
+		<md-subheader class="md-no-sticky">Słownik typów patronów medialnych</md-subheader>
+		<md-list-item ng-repeat="m in mediaPartnersDict">
+			<p ng-show="m.id > 0 && !isEditMediaPartner(m.id)">{{m.name}}</p>
+			<p ng-show="m.id < 0 || isEditMediaPartner(m.id)">
+				<md-input-container>
+					<label>Nazwa typu</label>
+					<input ng-model="m.name" md-maxlength="100" minlength="2">
+				</md-input-container>
+			</p>
+			<p layout="row" layout-align="end center">
+				<md-button ng-show="m.id > 0 && !isEditMediaPartner(m.id)" ng-click="editMediaPartner(m.id)">Edytuj</md-button>
+				<md-button ng-click="removeMediaPartner(m)">Usuń</md-button>
+			</p>
+		</md-list-item>
+		<md-list-item>
+			<p layout="row" layout-align="end center">
+				<md-button ng-click="addToMediaPartner()">Dodaj</md-button>
+			</p>
+		</md-list-item>
+	</md-list>
+	<p layout="row" layout-align="end center">
+		<md-button ng-click="saveMediaPartnersDictionary()">Zapisz zmiany w słowniku patronów medialnych</md-button>
+	</p>
+</div>
+</div>

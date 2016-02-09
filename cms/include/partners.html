@@ -1,0 +1,46 @@
+<div title-toolbar="Partnerzy" menu-func="toggleLeft()" user-info="userInfo" logout="logout()" event-edition="event_edition" editions="editions"></div>
+
+<div class="partners-container" ng-controller="partnersCtrl">
+	<md-card class="partner" ng-repeat="partner in partners">
+		<md-card-title>
+			<md-card-title-text>
+				<span class="md-headline">{{partner.name}}</span>
+				<span layout-wrap wrap layout="row" class="md-subhead">
+					<label flex="30" ng-show="partner.www.length > 0"><span>Strona WWW</span>
+						<div ng-click="redirectToWWW(partner.www);">{{partner.www}}</div>
+					</label> 
+					<label flex="30"ng-show="partner.fb.length > 0"><span>Fanpage FB</span>
+						<div ng-click="redirectToWWW(partner.fb);">{{partner.fb}}</div>
+					</label>
+					<label flex="30"><span>Typ</span>
+						<div>{{partner.typeName}}</div>
+					</label>
+					<label flex="100" ng-show="partner.description.length > 0"><span>Opis</span>
+						<br />
+						<div>{{partner.description}}</div>
+					</label>
+				</span>
+			</md-card-title-text>
+			<md-card-title-media>
+				<div class="md-media-lg card-media">
+					<img ngf-thumbnail="partner.logo"/>
+				</div>
+			</md-card-title-media>
+		</md-card-title>
+		<md-card-actions layout="row" layout-align="end center">
+			<md-button ng-click="editPartner(partner)">Edytuj</md-button>
+			<md-button ng-click="removePartner(partner.id, partner.name)">Usuń</md-button>
+		</md-card-actions>
+	</md-card>
+	<div ng-show="showInfo" class="no-content">Lista partnerów w tej edycji jest pusta</div>
+
+	<div class="lock-size" layout="row" layout-align="center center">
+		<md-fab-speed-dial ng-click="clearForm(); toggleRight()" ng-hide="isOpenRight()" 	class="md-fab-bottom-right">
+			<md-fab-trigger>
+				<md-button aria-label="menu" class="md-fab">
+					<md-icon md-font-set="material-icons">add</md-icon>
+				</md-button>
+				</md-fab-trigger>
+		</md-fab-speed-dial>
+	</div>
+</div>

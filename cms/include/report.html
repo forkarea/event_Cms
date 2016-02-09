@@ -1,0 +1,35 @@
+<div title-toolbar="Relacja" menu-func="toggleLeft()" user-info="userInfo" logout="logout()" event-edition="event_edition" editions="editions"></div>
+
+<div ng-controller="reportCtrl" class="ng-scope">
+	<div class="text-editor-container">
+		<text-angular ng-model="htmlReport"></text-angular>
+	</div>
+	<div class="actions-row" layout="row" layout-align="end center">
+		<md-button id="save" ng-click="save()">Zapisz</md-button>
+	</div>
+	<md-card class="photo" ng-repeat="photo in photoList">
+		<md-card-title>
+			<md-card-title-text>
+				<span class="md-headline">{{photo.url}}</span>
+			</md-card-title-text>
+			<md-card-title-media>
+				<div class="md-media-lg card-media">
+					<img ngf-thumbnail="photo.url"/>
+				</div>
+			</md-card-title-media>
+		</md-card-title>
+		<md-card-actions layout="row" layout-align="end center">
+			<md-button ng-click="removeReportPhoto(photo)">Usuń</md-button>
+		</md-card-actions>
+	</md-card>
+	<div ng-show="showInfo" class="no-content">Lista zdjęć w tej edycji wydarzenia jest pusta</div>
+	<div class="lock-size" layout="row" layout-align="center center">
+		<md-fab-speed-dial ng-click="clearForm(); toggleRight()" ng-hide="isOpenRight()" class="md-fab-bottom-right">
+			<md-fab-trigger>
+				<md-button aria-label="menu" class="md-fab">
+					<md-icon md-font-set="material-icons">add_a_photo</md-icon>
+				</md-button>
+				</md-fab-trigger>
+		</md-fab-speed-dial>
+	</div>
+</div>

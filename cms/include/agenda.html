@@ -1,0 +1,39 @@
+<div title-toolbar="Program" menu-func="toggleLeft()" user-info="userInfo" logout="logout()" event-edition="event_edition" editions="editions"></div>
+<div class="trainers-container" ng-controller="agendaCtrl">
+	<md-card class="agenda" ng-repeat="ag in agenda">
+		<md-card-title>
+			<md-card-title-text>
+				<span class="md-headline">{{ag.name}}</span>
+				<span layout-wrap wrap layout="row" class="md-subhead">
+					<label flex="30"><span>Data i godzina rozpoczęcia</span>
+						<div class="start-dateTime">{{ag.start_date}} {{ag.start_time}}</div>
+					</label> 
+					<label flex="30"><span>Data i godzina zakończenia</span>
+						<div class="stop-dateTime">{{ag.stop_date}} {{ag.stop_time}}</div>
+					</label> 
+					<label flex="30"><span>Trener</span>
+						<div class="trainer">{{ag.first_name}} {{ag.last_name}}</div>
+					</label> 
+					<label flex="100"><span>Opis</span>
+						<div class="description">{{ag.description}}</div>
+					</label> 
+				</span>
+			</md-card-title-text>
+		</md-card-title>
+		<md-card-actions layout="row" layout-align="end center">
+			<md-button ng-click="editAgenda(ag)">Edytuj</md-button>
+			<md-button ng-click="removeAgenda(ag.id, ag.name)">Usuń</md-button>
+		</md-card-actions>
+	</md-card>
+	<div ng-show="showInfo" class="no-content">Agenda dla tej edycji wydarzenia jest pusta</div>
+
+	<div class="lock-size" layout="row" layout-align="center center">
+    	<md-fab-speed-dial ng-click="clearForm(); toggleRight()" ng-hide="isOpenRight()" class="md-fab-bottom-right">
+    		<md-fab-trigger>
+        		<md-button aria-label="menu" class="md-fab">
+            		<md-icon md-font-set="material-icons">add</md-icon>
+        		</md-button>
+    		</md-fab-trigger>
+		</md-fab-speed-dial>
+	</div>
+</div>

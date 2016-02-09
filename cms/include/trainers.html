@@ -1,0 +1,37 @@
+<div title-toolbar="Trenerzy" menu-func="toggleLeft()" user-info="userInfo" logout="logout()" event-edition="event_edition" editions="editions"></div>
+<div class="trainers-container" ng-controller="trainersCtrl">
+	<md-card class="trainer" ng-repeat="trainer in trainers">
+		<md-card-title>
+			<md-card-title-text>
+				<span class="md-headline">{{trainer.first_name}} {{trainer.last_name}}</span>
+				<span layout-wrap wrap layout="row" class="md-subhead">
+					<label flex="100"><span>O trenerze</span>
+						<div class="trainer-description">{{trainer.description}}</div>
+					</label> 
+					<label flex="100"><span>Doświadczenie</span>
+						<div class="trainer-experience">{{trainer.experience}}</div>
+					</label> 
+				</span>
+			</md-card-title-text>
+			<md-card-title-media ng-if="trainer.photo != ''">
+				<div class="md-media-lg card-media">
+					<img ngf-thumbnail="trainer.photo"/>
+				</div>
+			</md-card-title-media>
+		</md-card-title>
+		<md-card-actions layout="row" layout-align="end center">
+			<md-button ng-click="editTrainer(trainer)">Edytuj</md-button>
+			<md-button ng-click="removeTrainer(trainer)">Usuń</md-button>
+		</md-card-actions>
+	</md-card>
+	<div ng-show="showInfo" class="no-content">Lista trenerów w tej edycji wydarzenia jest pusta</div>
+	<div class="lock-size" layout="row" layout-align="center center">
+	    <md-fab-speed-dial ng-click="clearForm(); toggleRight()" ng-hide="isOpenRight()" class="md-fab-bottom-right">
+    		<md-fab-trigger>
+        		<md-button aria-label="menu" class="md-fab">
+            		<md-icon md-font-set="material-icons">add</md-icon>
+        		</md-button>
+    		</md-fab-trigger>
+		</md-fab-speed-dial>
+	</div>
+</div>

@@ -1,0 +1,24 @@
+<div title-toolbar="Profil" menu-func="toggleLeft()" user-info="userInfo" logout="logout()" event-edition="event_edition" editions="editions"></div>
+<div class="user-profile" ng-controller="profileCtrl" ng-init="getUserDetails()">
+    <form name="editProfile" layout-wrap flex layout="row">
+        <md-input-container flex="100">
+            <label>Nazwa użytkownika</label>
+            <input ng-model="username" md-maxlength="32" disabled>
+        </md-input-container>
+        <md-input-container flex="100">
+            <label>Imię</label>
+            <input ng-model="first_name" md-maxlength="50" minlength="2" required>
+        </md-input-container>
+        <md-input-container flex="100">
+            <label>Nazwisko</label>
+            <input ng-model="last_name" md-maxlength="60" minlength="2" required>
+        </md-input-container>
+	    <md-input-container flex="100">
+            <label>E-mail</label>
+            <input ng-model="email" type="email" md-maxlength="80" minlength="2" required>
+        </md-input-container>
+        <div class="actions-row" layout="row" layout-align="end center">
+            <md-button id="save" ng-click="save(editProfile)">Zapisz</md-button>
+        </div>
+    </form>
+</div>

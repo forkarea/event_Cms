@@ -1,0 +1,39 @@
+<div title-toolbar="Edycje" menu-func="toggleLeft()" user-info="userInfo" logout="logout()" event-edition="event_edition" editions="editions"></div>
+
+<div class="editions-container" ng-controller="editionCtrl">
+	<md-card class="edition" ng-repeat="edition in editionsList">
+		<md-card-title>
+			<md-card-title-text>
+				<span class="md-headline">{{edition.number}}. {{edition.name}}</span>
+				<span layout-wrap wrap layout="row" class="md-subhead">
+					<label flex="30"><span>Data rozpoczęcia</span>
+						<div>{{edition.start_date}}</div>
+					</label> 
+					<label flex="30"><span>Data zakończenia:</span>
+						<div>{{edition.stop_date}}</div>
+					</label>
+					<md-checkbox flex="30" ng-change="setEditionVisibility(edition)" ng-model="edition.visibility" aria-label="Widoczność" ng-true-value="'1'" ng-false-value="'0'">
+						Widoczność
+					</md-checkbox> 
+				</span>
+			</md-card-title-text>
+			<md-card-title-media>
+				<div class="md-media-lg card-media"></div>
+			</md-card-title-media>
+		</md-card-title>
+		<md-card-actions layout="row" layout-align="end center">
+			<md-button ng-click="editEditions(edition)">Edytuj</md-button>
+		</md-card-actions>
+	</md-card>
+	<div ng-show="showInfo" class="no-content">Lista edycji jest pusta</div>
+
+	<div class="lock-size" layout="row" layout-align="center center">
+		<md-fab-speed-dial ng-click="clearForm(); toggleRight()" ng-hide="isOpenRight()" class="md-fab-bottom-right">
+			<md-fab-trigger>
+				<md-button aria-label="menu" class="md-fab">
+					<md-icon md-font-set="material-icons">add</md-icon>
+				</md-button>
+			</md-fab-trigger>
+		</md-fab-speed-dial>
+	</div>
+</div>
