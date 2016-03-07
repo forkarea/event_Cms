@@ -805,11 +805,16 @@ function getAgendasList() {
 	if ($this->isLogged($request)) {
 		$toReturn = array();
 		@$edition = $request->edition;
-		$sql = "SELECT a.id, name, a.description, start_date, start_time, stop_date, stop_time, trainer_id, t.first_name, t.last_name FROM agenda a JOIN trainers t ON trainer_id = t.id WHERE a.event_edition='$edition' ORDER BY start_date ASC, start_time ASC";
+		$sql = "SELECT a.id, a.name, a.description, start_date, start_time, stop_date, stop_time, trainer_id, path_id, t.first_name, t.last_name, p.name as 'path'
+			FROM agenda a 
+				LEFT JOIN trainers t ON trainer_id = t.id 
+				LEFT JOIN paths p ON a.path_id = p.id
+			WHERE a.event_edition='$edition' 
+			ORDER BY start_date ASC, start_time ASC";
 		$result = $this->mysqli->query($sql);
 		if (mysqli_num_rows($result) > 0) {
 			while($row = mysqli_fetch_assoc($result)) {					
-				$toReturn[] = array('id' => $row["id"], 'name' => $row["name"], 'description' => $row["description"], 'start_date' => $row["start_date"], 'start_time' => date('G:i', strtotime($row["start_time"])), 'stop_date' => $row["stop_date"], 'stop_time' => date('G:i', strtotime($row["stop_time"])), 'trainer_id' => $row["trainer_id"], 'first_name' => $row["first_name"], 'last_name' => $row["last_name"]);
+				$toReturn[] = array('id' => $row["id"], 'name' => $row["name"], 'description' => $row["description"], 'start_date' => $row["start_date"], 'start_time' => date('G:i', strtotime($row["start_time"])), 'stop_date' => $row["stop_date"], 'stop_time' => date('G:i', strtotime($row["stop_time"])), 'trainer_id' => $row["trainer_id"], 'path_id' => $row["path_id"], 'path' => $row["path"], 'first_name' => $row["first_name"], 'last_name' => $row["last_name"]);
 			}
 			$this->response($this->json($toReturn), 200);
 		} else {
@@ -828,25 +833,28 @@ function addNewAgenda() {
 		$stop_time = new DateTime($request->stopTime, new DateTimeZone('Poland'));
 		$stop_date = new DateTime(substr($request->stopDate, 0, 23),new DateTimeZone('Poland'));
 		@$trainer = $request->trainer;
+		if (!isset($trainer)) {
+			$trainer = -1;
+		}
 		@$description = $request->description;
+		@$path_id = $request->path_id;
 		$start_datetime = new DateTime(substr($request->startDate, 0, 23), new DateTimeZone('Poland'));
 		$start_datetime->setTime($start_time->format('H'), $start_time->format('i'));
 		$stop_datetime = new DateTime(substr($request->stopDate, 0, 23), new DateTimeZone('Poland'));
 		$stop_datetime->setTime($stop_time->format('H'), $stop_time->format('i'));
 		if($edition != null && $name != null && $start_time != null &&
-			$start_date!= null && $stop_time != null && $stop_date != null &&
-			$trainer != null && $description != null && $stop_datetime > $start_datetime) {
+			$start_date!= null && $stop_time != null && $stop_date != null && $stop_datetime > $start_datetime) {
 			$sql = "INSERT INTO agenda (name, start_date, start_time, stop_date, 
-				stop_time, trainer_id, event_edition, description) 
+				stop_time, trainer_id, path_id, event_edition, description) 
 				values('$name','".$start_date->format('Y-m-d')."','"
 				.$start_time->format('H:i:s')."','".
 				$stop_date->format('Y-m-d')."','".
-				$stop_time->format('H:i:s')."', $trainer, $edition, '$description')";
+				$stop_time->format('H:i:s')."', $trainer, $path_id, $edition, '$description')";
 				$result = $this->mysqli->query($sql);
 			if ($result) {
 				$this->response('', 200);
 			} else {
-				$this->response($this->json(array('message'=>'Błąd zapisu danych')), 400);
+				$this->response($this->json(array('message'=>$sql)), 400);
 			}
 		} else {
 			$this->response($this->json(array('message'=>'Nie wszystkie pola zostały wypełnione')), 400);
@@ -865,6 +873,7 @@ function changeAgenda() {
 		$stop_date = new DateTime(substr($request->stopDate, 0, 23),new DateTimeZone('Poland'));
 		@$trainer = $request->trainer;
 		@$description = $request->description;
+		@$path_id = $request->path_id;
 		$start_datetime = new DateTime(substr($request->startDate, 0, 23), new DateTimeZone('Poland'));
 		$start_datetime->setTime($start_time->format('H'), $start_time->format('i'));
 		$stop_datetime = new DateTime(substr($request->stopDate, 0, 23), new DateTimeZone('Poland'));
@@ -880,7 +889,8 @@ function changeAgenda() {
 			stop_date = '".$stop_date->format('Y-m-d')."', 
 			stop_time = '".$stop_time->format('H:i:s')."', 
 			trainer_id = $trainer,  
-			description = '$description'
+			description = '$description',
+			path_id = path_id
 			WHERE id = $agenda_id";
 			$result = $this->mysqli->query($sql);
 			if ($result) {

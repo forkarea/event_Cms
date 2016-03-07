@@ -1,0 +1,30 @@
+<md-dialog aria-label="{{agendaElement.name}}" ng-cloak>
+	<form class="agenda-element"><md-toolbar>
+			<div class="md-toolbar-tools">
+				<h2>{{agendaElement.name}}</h2>
+			</div>
+		</md-toolbar>
+		<md-dialog-content>
+			<div class="md-dialog-content">
+				<h4 ng-show="agendaElement.path_id !== '3'">{{agendaElement.path}}</h4>
+				<div>
+					<h4>Czas trwania</h4>
+					<p>{{agendaElement.start_date | date: 'dd MMMM yyyy'}} {{agendaElement.start_time}} - {{agendaElement.stop_date | date: 'dd MMMM yyyy'}} {{agendaElement.stop_time}}</p>
+				</div>
+				<div ng-show="agendaElement.description !== ''">
+					<h4>Opis warsztatu</h4>
+					<p>{{agendaElement.description}}</p>
+				</div>
+				<div ng-show="agendaElement.first_name !== null">
+					<h4>Trener</h4>
+					<p>{{agendaElement.first_name + ' ' + agendaElement.last_name}}</p>
+				</div>
+			</div>
+		</md-dialog-content>
+		<md-dialog-actions layout="row">
+			<md-button ng-click="cancel()" style="margin-right:20px;">
+				Zamknij
+			</md-button>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

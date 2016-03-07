@@ -60,6 +60,17 @@ angular.module('main.services', [])
 		});
 	};
 
+	services.getAgendaElement = function(edition, id) {
+		return $http({
+			method: 'post',
+			url: 'getAgendaElement',
+			data: {
+				edition: edition,
+				id: id
+			}
+		});
+	};
+
 	services.getOrganizers = function(edition) {
 		return $http({
 			method: 'post',

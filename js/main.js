@@ -2,8 +2,8 @@ var app=angular.module('main', ['ngMaterial', 'main.services',
 	'main.inform', 'ngFileUpload', 'daypilot']);
 
 
-app.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$location', '$timeout', '$mdSidenav', '$window', 'services', 'informService', 
-	function ($scope, $rootScope, $http, $location, $timeout, $mdSidenav, $window, services, informService) {
+app.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$location', '$timeout', '$mdSidenav', '$window', 'services', 'informService', '$mdMedia', '$mdDialog', 
+	function ($scope, $rootScope, $http, $location, $timeout, $mdSidenav, $window, services, informService, $mdMedia, $mdDialog) {
 		'use strict';
 		$scope.event_edition = null;
 		$scope.editions;
@@ -13,6 +13,7 @@ app.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$location', '$time
 		$scope.description = null;
 		$scope.trainers = null;
 		$scope.agenda = null;
+		$scope.agendaElement = null;
 		$scope.organizers = null;
 		$scope.partners = null;
 		$scope.mediaPartners = null;
@@ -27,13 +28,48 @@ app.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$location', '$time
 			businessEndsHour: 17,
 			timeFormat: 24,
 			initScrollPos: 7,
-			dragDrop: false
+			dragDrop: false,
+
+			onEventClick: function(args) {
+				showAgendaElement(args.e.id());
+			}
 		};
 		
 
 		$scope.$on('change.edition', function (event, value) {
 			$scope.event_edition = value;
 		});
+
+		var showAgendaElement = function(id) {
+			services.getAgendaElement($scope.event_edition, id)
+			.success(function (data) {
+				$scope.agendaElement = data;
+				$scope.showAdvanced();
+			}).
+			error(function () {
+				informService.showSimpleToast('Błąd pobrania informacji o warsztacie');
+			});
+		}
+
+		$scope.showAdvanced = function(ev) {
+			var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
+			$mdDialog.show({
+				controller: DialogController,
+				templateUrl: 'include/agendaElementDialog.html',
+				parent: angular.element(document.body),
+				targetEvent: ev,
+				clickOutsideToClose: true,
+				fullscreen: useFullScreen,
+				locals: {
+					agendaElement: $scope.agendaElement
+				}
+			});
+			$scope.$watch(function() {
+				return $mdMedia('xs') || $mdMedia('sm');
+			}, function(wantsFullScreen) {
+				$scope.customFullscreen = (wantsFullScreen === true);
+			});
+		};
 
 		var getEditions = function() {
 			services.getEditions()
@@ -202,7 +238,11 @@ app.controller('mainCtrl', ['$scope', '$rootScope', '$http', '$location', '$time
 
 		};
 
-
-
-
 	}]);
+
+function DialogController($scope, $mdDialog, agendaElement) {
+	$scope.agendaElement = agendaElement;
+	$scope.cancel = function() {
+		$mdDialog.cancel();
+	};
+}

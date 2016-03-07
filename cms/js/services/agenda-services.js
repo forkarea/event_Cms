@@ -29,7 +29,8 @@ angular.module('main.agendaFactory', [])
 				stopTime: element.stop_time.toLocaleString(),
 				trainer: element.trainer_id,
 				name: element.name,
-				description: element.description
+				description: element.description,
+				path_id: element.path_id
 			}
 		});
 	};
@@ -48,7 +49,8 @@ angular.module('main.agendaFactory', [])
 				stopTime: element.stop_time.toLocaleString(),
 				trainer: element.trainer_id,
 				name: element.name,
-				description: element.description
+				description: element.description,
+				path_id: element.path_id
 			}
 		});
 	};

@@ -91,15 +91,39 @@ function getAgenda() {
 	$request = json_decode($postdata);
 	$toReturn = array();
 	@$edition = $request->edition;
-	$sql = "SELECT a.id, name, a.description, start_date, start_time, stop_date, stop_time, trainer_id, t.first_name, t.last_name FROM agenda a JOIN trainers t ON trainer_id = t.id WHERE a.event_edition='$edition' ORDER BY start_date ASC, start_time ASC";
+	$sql = "SELECT id, name, start_date, start_time, stop_date, stop_time
+			FROM agenda
+			WHERE event_edition='$edition' 
+			ORDER BY start_date ASC, start_time ASC, path_id ASC";
 	$result = $this->mysqli->query($sql);
 	if (mysqli_num_rows($result) > 0) {
 		while($row = mysqli_fetch_assoc($result)) {					
-			$toReturn[] = array('id' => $row["id"], 'text' => $row["name"], 'start' => $row["start_date"] . 'T' . $row["start_time"], 'end' => $row["stop_date"] . 'T' . $row["stop_time"], 'description' => $row["description"], 'trainer_id' => $row["trainer_id"], 'first_name' => $row["first_name"], 'last_name' => $row["last_name"]);
+			$toReturn[] = array('id' => $row["id"], 'text' => $row["name"], 'start' => $row["start_date"] . 'T' . $row["start_time"], 'end' => $row["stop_date"] . 'T' . $row["stop_time"]);
 		}
 		$this->response($this->json($toReturn), 200);
 	} else {
 		$this->response('', 204);
+	}
+}
+
+function getAgendaElement() {
+	$postdata = file_get_contents("php://input");
+	$request = json_decode($postdata);
+	$toReturn = array();
+	@$edition = $request->edition;
+	@$id = $request->id;
+	$sql = "SELECT a.id, a.name, a.description, start_date, start_time, stop_date, stop_time, trainer_id, path_id, t.first_name, t.last_name, p.name as 'path'
+			FROM agenda a 
+				LEFT JOIN trainers t ON trainer_id = t.id 
+				LEFT JOIN paths p ON a.path_id = p.id
+			WHERE a.event_edition='$edition' AND a.id = $id
+			ORDER BY start_date ASC, start_time ASC, path_id ASC";
+	$result = $this->mysqli->query($sql);
+	if (mysqli_num_rows($result) > 0) {
+		$row = mysqli_fetch_assoc($result);	
+		$this->response($this->json(array('id' => $row["id"], 'name' => $row["name"], 'start_date' => $row["start_date"], 'start_time' => date('G:i', strtotime($row["start_time"])), 'stop_date' => $row["stop_date"], 'stop_time' => date('G:i', strtotime($row["stop_time"])), 'description' => $row["description"], 'trainer_id' => $row["trainer_id"], 'path_id' => $row["path_id"], 'path' => $row["path"], 'first_name' => $row["first_name"], 'last_name' => $row["last_name"])), 200);
+	} else {
+		$this->response('', 306);
 	}
 }
 

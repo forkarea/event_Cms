@@ -30,6 +30,9 @@
 		<h1 class="md-toolbar-tools">{{edition.name}}</h1>
 		<h4 ng-show="edition.difDate">{{edition.start_date | date: 'dd MMMM yyyy'}} - {{edition.stop_date | date: 'dd MMMM yyyy'}}</h4>
 		<h4 ng-hide="edition.difDate">{{edition.start_date | date: 'dd MMMM yyyy'}}</h4>
+		<div class="event-logo-container">
+			<img class="event-logo" src="cms/img/event_logo.png" />
+		</div>
 	</md-toolbar>
 	<md-content>
 		<md-tabs md-dynamic-height md-border-bottom>

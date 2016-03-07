@@ -19,6 +19,8 @@ app.controller('agendaNewCtrl', ['$scope', '$rootScope', 'agendaService', 'infor
 			$scope.event_stop_date.getDate());
 
 		$scope.trainers = [];
+
+		$scope.paths = [{id: 1, name: 'Poziom 1'}, {id: 2, name: 'Poziom 2'}, {id: 3, name: 'Wszystkie'}];
 		
 		var init = function() {
 			trainersService.getTrainersShortList($scope.event_edition)

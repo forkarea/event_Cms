@@ -1,14 +1,14 @@
-﻿CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `username` varchar(32) NOT NULL,
-  `first_name` varchar(50) NOT NULL,
-  `last_name` varchar(60) NOT NULL,
-  `email` varchar(80) NOT NULL,
-  `password` varchar(32) NOT NULL,
-  `last_login` datetime DEFAULT NULL,
-  `role` varchar(1) DEFAULT NULL,
-  `session_id` varchar(256) NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `users` (
+	`id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`username` varchar(32) NOT NULL, 
+	`first_name` varchar(50) NOT NULL, 
+	`last_name` varchar(60) NOT NULL, 
+	`email` varchar(80) NOT NULL, 
+	`password` varchar(32) NOT NULL,
+	`last_login` datetime DEFAULT NULL,
+	`role` varchar(1) DEFAULT NULL,
+	`session_id` varchar(256) NULL
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
 CREATE TABLE `event_editions` ( 
 	`id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
